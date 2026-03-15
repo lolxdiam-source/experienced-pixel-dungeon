@@ -26,6 +26,9 @@ import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.hero.Hero;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.mobs.Mob;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
+import com.shatteredpixeldungeon.items.Item;
+import com.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixeldungeon.items.spritesheet.ItemSpriteSheet;
 
 public class Dagger extends MeleeWeapon {
 	
@@ -46,7 +49,7 @@ public class Dagger extends MeleeWeapon {
 	public int damageRoll(Char owner)  {
 		return 100000000;
 	}
-	@override
+	@Override
 	public int color () {
 		return Item.RED;
 	}	
