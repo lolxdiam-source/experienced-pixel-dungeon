@@ -1,8 +1,8 @@
 package com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee;
 
-import com.shatteredpixeldungeon.items.Item;
-import com.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixeldungeon.items.spritesheet.ItemSpriteSheet;
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.items.Item;
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.items.spritesheet.ItemSpriteSheet;
 
 public class Dagger extends MeleeWeapon {
     {
@@ -22,6 +22,6 @@ public class Dagger extends MeleeWeapon {
 
     @Override
     public int color() {
-    return com.shatteredpixeldungeon.items.Item.RED;
+        return Item.RED;
     }
 }
