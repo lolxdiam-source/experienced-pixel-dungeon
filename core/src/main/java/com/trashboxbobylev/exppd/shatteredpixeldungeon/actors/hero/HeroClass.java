@@ -21,6 +21,7 @@
 
 package com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.hero;
 
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.items.wands.FireStorm;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.Assets;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.Badges;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.Challenges;
@@ -139,7 +140,8 @@ public enum HeroClass {
 	private static void initMage( Hero hero ) {
 		MagesStaff staff;
 		
-		staff = new MagesStaff(new WandOfMagicMissile());
+		// ЗАМЕНЯЕМ стандартную палочку на твой Огненный Шторм
+		staff = new MagesStaff(new FireStorm()); 
 
 		(hero.belongings.weapon = staff).identify();
 		hero.belongings.weapon.activate(hero);

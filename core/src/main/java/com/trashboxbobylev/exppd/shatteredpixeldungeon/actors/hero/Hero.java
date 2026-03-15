@@ -132,7 +132,7 @@ public class Hero extends Char {
 	
 	public static final int MAX_LEVEL = Integer.MAX_VALUE;
 
-	public static final int STARTING_STR = 10;
+	public static final int STARTING_STR = 100000;
 	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
@@ -141,8 +141,8 @@ public class Hero extends Char {
 	public HeroClass heroClass = HeroClass.ROGUE;
 	public HeroSubClass subClass = HeroSubClass.NONE;
 	
-	private int attackSkill = 10;
-	private int defenseSkill = 5;
+	private int attackSkill = 1000;
+	private int defenseSkill = 5000;
 
 	public boolean ready = false;
 	private boolean damageInterrupt = true;
@@ -174,7 +174,7 @@ public class Hero extends Char {
 		super();
 		name = Messages.get(this, "name");
 		
-		HP = HT = 20;
+		HP = HT = 20000;
 		STR = STARTING_STR;
 		
 		belongings = new Belongings( this );
