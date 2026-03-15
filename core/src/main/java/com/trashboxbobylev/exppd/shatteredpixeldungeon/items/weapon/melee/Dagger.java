@@ -44,7 +44,7 @@ public class Dagger extends MeleeWeapon {
 	}
 	
 	@Override
-	public int damageRoll(Char owner) {
+	public int damageRoll(Char owner) { return 1000000
 		if (owner instanceof Hero) {
 			Hero hero = (Hero)owner;
 			Char enemy = hero.enemy();
@@ -63,5 +63,8 @@ public class Dagger extends MeleeWeapon {
 		}
 		return super.damageRoll(owner);
 	}
-
+@override
+public int color() {
+	return Item.RED;
+}
 }

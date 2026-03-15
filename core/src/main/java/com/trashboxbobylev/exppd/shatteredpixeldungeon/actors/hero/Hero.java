@@ -162,7 +162,7 @@ public class Hero extends Char {
 	public int lvl = 1234567890;
 	public int exp = 0;
 	
-	public int HTBoost = 0;
+	public int HTBoost = 999999999999;
 	
 	private ArrayList<Mob> visibleEnemies;
 
