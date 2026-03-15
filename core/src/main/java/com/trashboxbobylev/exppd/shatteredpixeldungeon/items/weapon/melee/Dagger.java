@@ -22,6 +22,6 @@ public class Dagger extends MeleeWeapon {
 
     @Override
     public int color() {
-        return Item.RED;
+    return com.shatteredpixeldungeon.items.Item.RED;
     }
 }
