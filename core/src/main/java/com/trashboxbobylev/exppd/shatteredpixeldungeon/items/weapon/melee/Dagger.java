@@ -32,15 +32,14 @@ public class Dagger extends MeleeWeapon {
 	{
 		image = ItemSpriteSheet.DAGGER;
 
-		tier = 99999999;
+		tier = 5;
 		
 		bones = false;
 	}
 
 	@Override
 	public int max(int lvl) {
-		return  4*(tier+1) +    //8 base, down from 10
-				lvl*(tier+1);   //scaling unchanged
+		return 100000000;
 	}
 	
 	@Override
@@ -49,6 +48,6 @@ public class Dagger extends MeleeWeapon {
 	}
 	@override
 	public int color () {
-		return item.RED;
+		return Item.RED;
 	}	
 }
