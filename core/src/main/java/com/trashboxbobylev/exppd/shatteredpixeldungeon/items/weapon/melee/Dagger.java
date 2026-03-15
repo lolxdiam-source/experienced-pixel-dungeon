@@ -45,7 +45,7 @@ public class Dagger extends MeleeWeapon {
 	
 	@Override
 	public int damageRoll(Char owner)  {
-		return 10000000000000
+		return 100000000;
 	}
 	@override
 	public int color () {
