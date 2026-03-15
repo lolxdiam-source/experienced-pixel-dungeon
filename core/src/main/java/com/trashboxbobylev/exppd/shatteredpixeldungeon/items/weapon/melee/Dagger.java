@@ -50,4 +50,4 @@ public class Dagger extends MeleeWeapon {
 	public int color () {
 		return Item.RED;
 	}	
-}
+   }
