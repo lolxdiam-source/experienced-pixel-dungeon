@@ -8,17 +8,17 @@ import com.watabou.utils.Random;
 
 public class Dagger extends MeleeWeapon {
     {
-        image = ItemSpriteSheet.Dagger; 
-        tier = 5;
+        image = ItemSpriteSheet.DAGGER; 
+        tier = 1;
     }
 
     @Override
     public int max(int lvl) {
-        return 100000000;
+        return 1000000;
     }
 
     @Override
     public int damageRoll(Char owner) {
-        return 100000000;
+        return 1000000;
     }
 }
