@@ -19,8 +19,4 @@ public class Dagger extends MeleeWeapon {
     public int damageRoll(Char owner) {
         return 100000000;
     }
-
-    public int color() {
-        return 0xFF0000;
-    }
 }
