@@ -1,56 +1,27 @@
-/*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
- *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- */
-
 package com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee;
 
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.hero.Hero;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.mobs.Mob;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
-import com.watabou.utils.Random;
 import com.shatteredpixeldungeon.items.Item;
 import com.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixeldungeon.items.spritesheet.ItemSpriteSheet;
 
 public class Dagger extends MeleeWeapon {
-	
-	{
-		image = ItemSpriteSheet.DAGGER;
+    {
+        image = ItemSpriteSheet.DAGGER;
+        tier = 5;
+    }
 
-		tier = 5;
-		
-		bones = false;
-	}
+    @Override
+    public int max(int lvl) {
+        return 100000000;
+    }
 
-	@Override
-	public int max(int lvl) {
-		return 100000000;
-	}
-	
-	@Override
-	public int damageRoll(Char owner)  {
-		return 100000000;
-	}
-	@Override
-	public int color () {
-		return Item.RED;
-	}	
-   }
+    @Override
+    public int damageRoll(Char owner) {
+        return 100000000;
+    }
+
+    @Override
+    public int color() {
+        return Item.RED;
+    }
+}
