@@ -37,20 +37,29 @@ public class FireStorm extends WandOfFireblast {
             if (Dungeon.level.passable[cell]) {
                 // ИСПРАВЛЕННЫЙ СПАВН ОГНЯ:
                 // В новых версиях PD огонь вызывается так:
-                Fire fire = (Fire)Dungeon.level.blobs.get(Fire.class);
-                if (fire == null) {
-                    fire = new Fire();
-                }
-                // Используем правильный метод seed (клетка, количество, класс, уровень)
-                fire.seed(cell, 10, Fire.class, Dungeon.level);
-                Dungeon.level.blobs.put(fire);
-                
-                CellEmitter.get(cell).burst(FlameParticle.FACTORY, 4);
-                
-                Char ch = Actor.findChar(cell);
-                if (ch != null && ch != curUser) {
-                    ch.damage(damageRoll(), this);
-                    Buff.affect(ch, Burning.class).reignite(ch);
+               Fire fire = (Fire)Dungeon.level.blobs.get(Fire.class);
+if (fire == null) {
+    fire = new Fire();
+    Dungeon.level.blobs.put(Fire.class, fire); // Сразу регистрируем его на уровне
+}
+
+// 2. Теперь запускаем цикл по клеткам
+for (int i = 0; i < PathFinder.CIRCLE8.length; i++) {
+    int cell = curUser.pos + PathFinder.CIRCLE8[i];
+    
+    if (Dungeon.level.passable[cell]) {
+        // Просто "сеем" огонь в эту клетку, объект fire у нас уже есть
+        fire.seed(cell, 10, Fire.class, Dungeon.level);
+        
+        CellEmitter.get(cell).burst(FlameParticle.FACTORY, 4);
+        
+        Char ch = Actor.findChar(cell);
+        if (ch != null && ch != curUser) {
+            ch.damage(damageRoll(), this);
+            Buff.affect(ch, Burning.class).reignite(ch);
+        }
+    }
+}
                 }
             }
         }
