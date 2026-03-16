@@ -140,7 +140,6 @@ public enum HeroClass {
 	private static void initMage( Hero hero ) {
 		MagesStaff staff;
 		
-		// ЗАМЕНЯЕМ стандартную палочку на твой Огненный Шторм
 		staff = new MagesStaff(new FireStorm()); 
 
 		(hero.belongings.weapon = staff).identify();
