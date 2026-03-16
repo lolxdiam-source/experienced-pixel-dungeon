@@ -11,6 +11,7 @@ import com.trashboxbobylev.exppd.shatteredpixeldungeon.effects.particles.FlamePa
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.mechanics.Ballistica;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.PathFinder;
+import com.watabou.noosa.Camera; // Импорт для камеры (тряски)
 
 public class FireStorm extends WandOfFireblast {
 
@@ -26,49 +27,40 @@ public class FireStorm extends WandOfFireblast {
 
     @Override
     protected void onZap(Ballistica bolt) {
-        // 1. УБИРАЕМ FireImmunity, так как его нет в вашем коде. 
-        // Вместо этого просто потушим игрока, если он загорится.
+        // Защищаем игрока от собственного огня
         Buff.detach(curUser, Burning.class);
 
-        // 2. ШТОРМ
+        // Ищем или создаем объект огня на уровне
+        Fire fire = (Fire)Dungeon.level.blobs.get(Fire.class);
+        if (fire == null) {
+            fire = new Fire();
+            Dungeon.level.blobs.put(Fire.class, fire);
+        }
+
+        // Шторм вокруг героя
         for (int i = 0; i < PathFinder.CIRCLE8.length; i++) {
             int cell = curUser.pos + PathFinder.CIRCLE8[i];
             
             if (Dungeon.level.passable[cell]) {
-                // ИСПРАВЛЕННЫЙ СПАВН ОГНЯ:
-                // В новых версиях PD огонь вызывается так:
-               Fire fire = (Fire)Dungeon.level.blobs.get(Fire.class);
-if (fire == null) {
-    fire = new Fire();
-    Dungeon.level.blobs.put(Fire.class, fire); // Сразу регистрируем его на уровне
-}
-
-// 2. Теперь запускаем цикл по клеткам
-for (int i = 0; i < PathFinder.CIRCLE8.length; i++) {
-    int cell = curUser.pos + PathFinder.CIRCLE8[i];
-    
-    if (Dungeon.level.passable[cell]) {
-        // Просто "сеем" огонь в эту клетку, объект fire у нас уже есть
-        fire.seed(cell, 10, Fire.class, Dungeon.level);
-        
-        CellEmitter.get(cell).burst(FlameParticle.FACTORY, 4);
-        
-        Char ch = Actor.findChar(cell);
-        if (ch != null && ch != curUser) {
-            ch.damage(damageRoll(), this);
-            Buff.affect(ch, Burning.class).reignite(ch);
-        }
-    }
-}
+                fire.seed(cell, 10, Fire.class, Dungeon.level);
+                CellEmitter.get(cell).burst(FlameParticle.FACTORY, 4);
+                
+                Char ch = Actor.findChar(cell);
+                if (ch != null && ch != curUser) {
+                    ch.damage(damageRoll(), this);
+                    Buff.affect(ch, Burning.class).reignite(ch);
                 }
             }
         }
 
+        // Добавляем немного «сочности»
+        Camera.main.shake(4, 0.2f);
+        
         super.onZap(bolt);
     }
 
     @Override
     public String desc() {
-        return "Этот посох излучает невыносимый жар.";
+        return "Этот посох излучает невыносимый жар. При использовании он вызывает сокрушительный огненный шторм.";
     }
 }
