@@ -6,7 +6,6 @@ import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.blobs.Fire;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Buff;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Burning;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.FireImmunity; // Иммунитет
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.effects.CellEmitter;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.effects.particles.FlameParticle;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.mechanics.Ballistica;
@@ -16,34 +15,38 @@ import com.watabou.utils.PathFinder;
 public class FireStorm extends WandOfFireblast {
 
     {
-        // Оставляем ту же иконку или меняем на свою
         image = ItemSpriteSheet.WAND_FIREBOLT; 
     }
 
     @Override
-    public int min(int lvl) { return 1000000; } // Миллион урона
+    public int min(int lvl) { return 1000000; } 
 
     @Override
     public int max(int lvl) { return 1000000; }
 
     @Override
     protected void onZap(Ballistica bolt) {
-        // 1. ЗАЩИТА: Перед взрывом даем игроку иммунитет к огню
-        // Чтобы он не погиб от собственного шторма
-        Buff.affect(curUser, FireImmunity.class).set(50f); 
+        // 1. УБИРАЕМ FireImmunity, так как его нет в вашем коде. 
+        // Вместо этого просто потушим игрока, если он загорится.
+        Buff.detach(curUser, Burning.class);
 
-        // 2. ШТОРМ: Создаем огонь во всех 8 клетках вокруг игрока
+        // 2. ШТОРМ
         for (int i = 0; i < PathFinder.CIRCLE8.length; i++) {
             int cell = curUser.pos + PathFinder.CIRCLE8[i];
+            
             if (Dungeon.level.passable[cell]) {
-                // Спавним густой огонь
-                Fire fire = Dungeon.level.blobs.get(Fire.class);
-                fire.seed(cell, 10); 
+                // ИСПРАВЛЕННЫЙ СПАВН ОГНЯ:
+                // В новых версиях PD огонь вызывается так:
+                Fire fire = (Fire)Dungeon.level.blobs.get(Fire.class);
+                if (fire == null) {
+                    fire = new Fire();
+                }
+                // Используем правильный метод seed (клетка, количество, класс, уровень)
+                fire.seed(cell, 10, Fire.class, Dungeon.level);
+                Dungeon.level.blobs.put(fire);
                 
-                // Визуальные искры
                 CellEmitter.get(cell).burst(FlameParticle.FACTORY, 4);
                 
-                // Наносим урон врагам в радиусе шторма
                 Char ch = Actor.findChar(cell);
                 if (ch != null && ch != curUser) {
                     ch.damage(damageRoll(), this);
@@ -52,13 +55,11 @@ public class FireStorm extends WandOfFireblast {
             }
         }
 
-        // 3. СТАНДАРТНЫЙ ВЫСТРЕЛ: Вызываем базовый конус огня из оригинала
         super.onZap(bolt);
     }
 
     @Override
     public String desc() {
-        return "Этот посох излучает невыносимый жар. При использовании он окружает владельца " +
-               "защитной аурой и вызывает сокрушительный огненный шторм.";
+        return "Этот посох излучает невыносимый жар.";
     }
 }
