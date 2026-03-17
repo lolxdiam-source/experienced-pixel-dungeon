@@ -2,19 +2,16 @@ package com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee;
 
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Poison;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSprite;
-import com.watabou.noosa.TextureFilm;
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class PoisonSword extends MeleeWeapon {
 
-    {
+    public PoisonSword() {
+        // Конструктор: задаем минимальный урон, максимальный и название
+        super(20, 28); 
         name = "poison sword";
-    }
-
-    // Убираем @Override, если он ругается, и используем стандартные переменные урона
-    {
-        min = 20;
-        max = 28;
+        // Временно используем иконку обычного меча, чтобы билд прошел
+        image = ItemSpriteSheet.SWORD; 
     }
 
     @Override
@@ -22,15 +19,6 @@ public class PoisonSword extends MeleeWeapon {
         Poison p = new Poison();
         p.set(15f);
         defender.add(p);
-    }
-
-    // Если Visual не работает, попробуем переопределить создание самого спрайта
-    @Override
-    public ItemSprite sprite() {
-        ItemSprite s = super.sprite();
-        s.link(new TextureFilm("PoisonSword.png", 32, 32));
-        s.frame(0);
-        return s;
     }
 
     @Override
