@@ -11,20 +11,26 @@ public class PoisonSword extends MeleeWeapon {
         name = "poison sword";
     }
 
-    @Override
-    public int damageRoll() {
-        return 28;
+    // Убираем @Override, если он ругается, и используем стандартные переменные урона
+    {
+        min = 20;
+        max = 28;
     }
 
     @Override
     public void proc(Char attacker, Char defender) {
-        defender.add(new Poison().set(15f));
+        Poison p = new Poison();
+        p.set(15f);
+        defender.add(p);
     }
 
-    // В Experienced PD это основной способ задать кастомный спрайт
+    // Если Visual не работает, попробуем переопределить создание самого спрайта
     @Override
-    public ItemSprite.Visual visual() {
-        return new ItemSprite.Visual(0, new TextureFilm("PoisonSword.png", 32, 32));
+    public ItemSprite sprite() {
+        ItemSprite s = super.sprite();
+        s.link(new TextureFilm("PoisonSword.png", 32, 32));
+        s.frame(0);
+        return s;
     }
 
     @Override
