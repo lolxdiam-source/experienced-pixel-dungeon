@@ -33,10 +33,12 @@ public class PoisonSword extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (defender.isAlive()) {
-            // В ExPD для боевых баффов часто используется метод .set()
-            // или прямое обращение к переменной .left
+            // Для Poison оставляем .set(15f), так как компилятор его пропустил
             Buff.affect(defender, Poison.class).set(15f);
-            Buff.affect(defender, Slow.class).set(5f);
+            
+            // Для Slow используем прямое обращение к переменной времени
+            // В ExPD у баффов это обычно поле .left
+            Buff.affect(defender, Slow.class).left = 5f;
         }
         return super.proc(attacker, defender, damage);
     }
