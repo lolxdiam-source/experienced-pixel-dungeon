@@ -16,8 +16,8 @@ public class PoisonSword extends MeleeWeapon {
         DLY = 0.1f;
         RCH = 2;
 
-        name = "P sword"
-        desc = "poisoned by dusk"
+        name = "P sword";
+        desc = "poisoned by dusk";
     }
     @Override
 	public int min(int lvl) {
