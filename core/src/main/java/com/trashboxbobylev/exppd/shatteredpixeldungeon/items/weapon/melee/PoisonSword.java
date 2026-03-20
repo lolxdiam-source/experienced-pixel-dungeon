@@ -1,28 +1,40 @@
-package com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapons.melee;
 
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Poison;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSprite;
 
 public class PoisonSword extends MeleeWeapon {
 
     public PoisonSword() {
-        // Конструктор: задаем минимальный урон, максимальный и название
-        super(20, 28); 
-        name = "poison sword";
-        // Временно используем иконку обычного меча, чтобы билд прошел
-        image = ItemSpriteSheet.SWORD; 
+        // Устанавливаем 3 тир, скорость 1х, точность 1х
+        super( 3, 1f, 1f ); 
+        name = "Poison Sword";
+        info = "Ядовитое лезвие — тест 1. Ранит и отравляет врагов.";
+        
+        // Индекс внутри вашего кастомного файла (обычно 0)
+        image = 0; 
     }
 
     @Override
-    public void proc(Char attacker, Char defender) {
-        Poison p = new Poison();
-        p.set(15f);
-        defender.add(p);
+    public int proc(Char attacker, Char defender, int damage) {
+        // Накладываем отравление на 15 секунд
+        if (defender.isAlive()) {
+            Poison.set(defender, 15f);
+        }
+        return super.proc(attacker, defender, damage);
+    }
+
+    // Этот метод заставляет игру брать иконку из вашего отдельного файла
+    @Override
+    public ItemSprite.Visual getVisual() {
+        // Убедитесь, что файл лежит по пути: assets/items/poison_sword.png
+        return new ItemSprite.Visual( "poison_sword.png", 0 );
     }
 
     @Override
     public String desc() {
-        return "ядовитое лезвие-тест-1";
+        return info;
     }
 }
