@@ -8,6 +8,9 @@ import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Slow;
 
 public class PoisonSword extends MeleeWeapon {
 
+    // Создаем свою переменную для описания, чтобы не зависеть от родительских
+    private String itemDescription = "Poisoned by dusk.";
+
     public PoisonSword() {
         super();
         
@@ -15,10 +18,8 @@ public class PoisonSword extends MeleeWeapon {
         tier = 4;
         DLY = 0.1f;
         RCH = 2;
-
+        
         name = "P sword";
-        // В твоем моде переменная называется desc, а не info
-        desc = "Poisoned by dusk."; 
     }
 
     @Override
@@ -35,16 +36,16 @@ public class PoisonSword extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (defender.isAlive()) {
-            // Используем стандартный метод для боевых баффов в Experienced PD
-            Buff.affect(defender, Poison.class).setDuration(15f);
-            Buff.affect(defender, Slow.class).setDuration(5f);
+            // В ExPD самый надежный способ наложить бафф - через affect и прямую установку времени
+            Buff.affect(defender, Poison.class).duration(15f);
+            Buff.affect(defender, Slow.class).duration(5f);
         }
         return super.proc(attacker, defender, damage);
     }
 
     @Override
     public String desc() {
-        // Возвращаем desc, который заполнили в конструкторе
-        return desc;
+        // Возвращаем нашу собственную переменную
+        return itemDescription;
     }
 }
