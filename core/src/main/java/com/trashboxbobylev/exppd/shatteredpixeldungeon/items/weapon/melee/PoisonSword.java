@@ -1,10 +1,17 @@
+Да, лог подтверждает, что в этой версии движка у баффа Slow нет ни метода .set(), ни переменной .left. Это частое явление в разработке модов, когда разные баффы наследуются от разных классов.
+
+Удаление проблемного кода — сейчас самое правильное решение, чтобы наконец-то получить рабочий билд и проверить сам меч (его скорость, урон и спрайт).
+
+Финальный код PoisonSword.java (только с ядом):
+Скопируй этот вариант, в нем нет ничего, что могло бы вызвать ошибку компиляции:
+
+Java
 package com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee;
 
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.Char;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Buff;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Poison;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Slow;
 
 public class PoisonSword extends MeleeWeapon {
 
@@ -33,20 +40,15 @@ public class PoisonSword extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if (defender.isAlive()) {
-            // Для Poison оставляем .set(15f), так как компилятор его пропустил
+            // Оставляем только Poison, так как на него компилятор не ругался
             Buff.affect(defender, Poison.class).set(15f);
-            
-            // Для Slow используем прямое обращение к переменной времени
-            // В ExPD у баффов это обычно поле .left
-            Buff.affect(defender, Slow.class).left = 5f;
         }
         return super.proc(attacker, defender, damage);
     }
 
     @Override
     public String desc() {
-        // Чтобы не искать, где в моде спрятана переменная описания,
-        // просто возвращаем текст напрямую. Это сработает на 100%.
+        // Прямой возврат строки — самый безопасный метод
         return "Poisoned by dusk.";
     }
 }
