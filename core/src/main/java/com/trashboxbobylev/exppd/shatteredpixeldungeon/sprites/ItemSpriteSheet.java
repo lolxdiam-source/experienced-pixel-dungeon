@@ -269,7 +269,7 @@ public class ItemSpriteSheet {
         assignItemRect(HALBERD,           16, 16);
         assignItemRect(TWIN_BLADES,    16, 16);
         assignItemRect(JJANGO,            16, 16);
-		assignItemRect(POISON_SWORD   32,  32);
+		assignItemRect(POISON_SWORD, 32,  32);
     }
 
 	                                                                                    //8 free slots
