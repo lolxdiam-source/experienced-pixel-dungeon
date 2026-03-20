@@ -17,7 +17,7 @@ public class PoisonSword extends MeleeWeapon {
         RCH = 2;
 
         name = "P sword";
-        desc = "poisoned by dusk";
+        info = "poisoned by dusk";
     }
     @Override
 	public int min(int lvl) {
@@ -31,13 +31,13 @@ public class PoisonSword extends MeleeWeapon {
     @Override
     public int proc(Char attacker, Char defender, int damage) {
         if(defender.isAlive()) {
-        Buff.affect(defender, Poison.class).duration = 999f;
-        Buff.affect(defender, Slow.class).duration = 999f;
+        Buff.prolong(defender, Poison.class, 99f);
+        Buff.prolong(defender, Slow.class, 99f);
         }
         return super.proc(attacker, defender, damage);
     }
     @Override
     public String desc() {
-        return desc;
+        return info;
     }
 }
