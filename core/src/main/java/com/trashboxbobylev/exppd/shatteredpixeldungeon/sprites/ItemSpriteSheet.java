@@ -262,12 +262,14 @@ public class ItemSpriteSheet {
     public static final int HALBERD           = WEP_TIER6+2;
     public static final int TWIN_BLADES    = WEP_TIER6+3;
     public static final int JJANGO            = WEP_TIER6+4;
+	public static final int POISON_SWORD   = WEP_TIER6+5;
     static{
         assignItemRect(SWIFTSWORD,      16, 16);
         assignItemRect(SWITCH_DAGGER,        11, 12);
         assignItemRect(HALBERD,           16, 16);
         assignItemRect(TWIN_BLADES,    16, 16);
         assignItemRect(JJANGO,            16, 16);
+		assignItemRect(POISON_SWORD   32,  32);
     }
 
 	                                                                                    //8 free slots
