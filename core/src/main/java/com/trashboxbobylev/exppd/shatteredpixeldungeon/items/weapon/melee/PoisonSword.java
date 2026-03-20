@@ -9,7 +9,7 @@ import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.buffs.Slow;
 public class PoisonSword extends MeleeWeapon {
 
     // Создаем свою переменную для описания, чтобы не зависеть от родительских
-    private String itemDescription = "Poisoned by dusk.";
+    private String itemDescription = "Poisoned by dusky.";
 
     public PoisonSword() {
         super();
