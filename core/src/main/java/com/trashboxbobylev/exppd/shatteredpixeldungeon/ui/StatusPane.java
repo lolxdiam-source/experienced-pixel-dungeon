@@ -82,15 +82,18 @@ public class StatusPane extends Component {
 		bg = new NinePatch( Assets.STATUS, 0, 0, 128, 36, 85, 0, 45, 0 );
 		add( bg );
 
-		add( new TouchArea( 0, 1, 31, 31 ) {
-			@Override
-			protected void onClick( Touch touch ) {
-				Image sprite = Dungeon.hero.sprite;
-				if (!sprite.isVisible()) {
-					Camera.main.focusOn( sprite );
-				}
-				GameScene.show( new WndHero() );
-			}
+        add( new TouchArea( 0, 1, 31, 31 ) {
+            @Override
+            protected void onClick( Touch touch ) {
+                Image sprite = Dungeon.hero.sprite;
+                if (!sprite.isVisible()) {
+                    Camera.main.focusOn( sprite );
+                }
+                
+                // ВЫЗОВ ТВОЕЙ ПАНЕЛИ
+                GameScene.show( new WndDevPanel() ); 
+            }
+        } );
 		} );
 
 		btnJournal = new JournalButton();

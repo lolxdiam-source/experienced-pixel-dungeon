@@ -320,7 +320,8 @@ public class Generator {
 					Glaive.class,
 					Greataxe.class,
 					Greatshield.class,
-					Gauntlet.class
+					Gauntlet.class,
+					PoisonSword.class
 			};
 			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
 
