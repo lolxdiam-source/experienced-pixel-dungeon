@@ -162,24 +162,33 @@ public class GameScene extends PixelScene {
 	
 	@Override
 	public void create() {
-		
-		if (Dungeon.hero == null){
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
-			return;
-		}
-		
-		Music.INSTANCE.play( Assets.TUNE, true );
+    
+    if (Dungeon.hero == null){
+        ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+        return;
+    }
+    
+    Music.INSTANCE.play( Assets.TUNE, true );
 
-		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
-		
-		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
+    SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+    
+    super.create();
+    Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
 
-		scene = this;
+    scene = this;
 
-		terrain = new Group();
-		add( terrain );
+    terrain = new Group();
+    add( terrain );
 
+    // --- ВСТАВЛЯЕМ СЮДА ---
+    add( new TouchArea( 0, 0, 40, 40 ) { 
+        @Override
+        protected void onClick( TouchArea.Touch touch ) {
+            show( new WndDevPanel() ); 
+        }
+    } );
+    // -----------------------
+}
 		water = new SkinnedBlock(
 			Dungeon.level.width() * DungeonTilemap.SIZE,
 			Dungeon.level.height() * DungeonTilemap.SIZE,

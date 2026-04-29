@@ -2,36 +2,64 @@ package com.trashboxbobylev.exppd.shatteredpixeldungeon.ui;
 
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.Dungeon;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.actors.hero.Hero;
-import com.trashboxbobylev.exppd.shatteredpixeldungeon.items.Generator;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.items.weapon.melee.PoisonSword;
 import com.trashboxbobylev.exppd.shatteredpixeldungeon.scenes.GameScene;
+import com.trashboxbobylev.exppd.shatteredpixeldungeon.utils.GLog;
 
-public class WndDevPanel extends WndOptions {
+public class WndDevPanel extends Window {
+
+    private static final int WIDTH = 120;
+    private static final int BTN_HEIGHT = 20;
 
     public WndDevPanel() {
-        super("CHEATS", "Select Dev Action:", 
-            "Give Poison Sword", "Random T4 Weapon", "Level Up", "Reveal Map");
-    }
+        super();
 
-    @Override
-    public void onSelect(int index) {
         Hero hero = Dungeon.hero;
-        switch (index) {
-            case 0: // Выдать конкретно твой меч
+
+        // Заголовок
+        IconTitle title = new IconTitle();
+        title.label("Dev Panel");
+        title.setRect(0, 0, WIDTH, 20);
+        add(title);
+
+        // Кнопка: Выдать Poison Sword
+        add(new RedButton("GET SWORD", WIDTH) {
+            @Override
+            protected void onClick() {
                 hero.collect(new PoisonSword());
-                break;
-            case 1: // Выдать случайное оружие 4 тира (включая твой меч)
-                // randomWeapon(3) соответствует floorSet 3, который в таблице floorSetTierProbs 
-                // дает высокие шансы на 4-й тир
-                hero.collect(Generator.randomWeapon(3));
-                break;
-            case 2:
-                hero.earnExp(hero.maxExp(), getClass());
-                break;
-            case 3:
+                GLog.i("Poison Sword added!");
+            }
+        }.setRect(0, 25, WIDTH, BTN_HEIGHT));
+
+        // Кнопка: Уровень +1
+        add(new RedButton("LEVEL UP", WIDTH) {
+            @Override
+            protected void onClick() {
+                hero.earnExp(hero.maxExp() - hero.exp, getClass());
+                GLog.p("Level Up!");
+            }
+        }.setRect(0, 50, WIDTH, BTN_HEIGHT));
+
+        // Кнопка: Исцеление
+        add(new RedButton("HEAL ME", WIDTH) {
+            @Override
+            protected void onClick() {
+                hero.hp = hero.ht();
+                hero.updateSpriteState();
+                GLog.i("Health restored.");
+            }
+        }.setRect(0, 75, WIDTH, BTN_HEIGHT));
+
+        // Кнопка: Открыть карту
+        add(new RedButton("REVEAL MAP", WIDTH) {
+            @Override
+            protected void onClick() {
                 Dungeon.level.visualize();
                 GameScene.flash(0xFFFFFF);
-                break;
-        }
+                GLog.w("Map revealed!");
+            }
+        }.setRect(0, 100, WIDTH, BTN_HEIGHT));
+
+        resize(WIDTH, 125);
     }
 }
